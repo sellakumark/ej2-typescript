@@ -1,0 +1,27 @@
+{
+  "name": "ej2-typescript",
+  "version": "1.0.0",
+  "description": "ej2 schedule typescript project",
+  "author": "Syncfusion Inc.",
+  "license": "SEE LICENSE IN license",
+  "private": true,
+  "dependencies": {
+    "@syncfusion/ej2-schedule": "*"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-protractor": "^4.1.0",
+    "jasmine": "^2.6.0",
+    "ts-loader": "^2.1.0",
+    "typescript": "2.3.4",
+    "webpack": "2.5.1",
+    "webpack-stream": "^3.2.0"
+  },
+  "scripts": {
+    "start": "gulp start",
+    "serve": "gulp e2e-serve",
+    "test": "gulp e2e-test",
+    "update-webdriver": "gulp e2e-webdriver-update"
+  }
+}
