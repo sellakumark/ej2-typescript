@@ -1,7 +1,7 @@
 import { Ajax, L10n, loadCldr, setCulture, enableRtl } from '@syncfusion/ej2-base';
-import { Month, Schedule, Week } from '@syncfusion/ej2-schedule';
+import { Month, Schedule, Week, DragAndDrop } from '@syncfusion/ej2-schedule';
 
-Schedule.Inject(Week, Month);
+Schedule.Inject(Week, Month, DragAndDrop);
 
 function loadCultureFiles(name: string, base: boolean = false): void {
     let files: string[] = !base ?

@@ -5,7 +5,7 @@ var gulp = require('gulp');
 /**
  * Load the sample in src/app/index
  */
-gulp.task('start', function (done) {
+gulp.task('start', ['compile'], function (done) {
     var browserSync = require('browser-sync');
     var bs = browserSync.create('Essential JS 2');
     var options = {
