@@ -2,48 +2,53 @@
 <html>
 
 <head>
-  <title>Print</title>
+  <title>AllDay Scroll Improvements</title>
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet">
+  <link href="material.css" rel="stylesheet">
 
   <style>
     html,
     body {
       height: 100vh;
+      margin: 0;
+      overflow: auto;
+      padding: 0;
       width: 100vw;
     }
   </style>
 </head>
 
 <body class="e-css">
-  <div class="container-fluid mt-3">
-    <div class="row mb-3">
-      <div class="col-md-3">
-        <button id="print" class="btn">Print</button>
-      </div>
-    </div>
-    <div class="row mb-3">
+  <div class="container-fluid px-0 py-0">
+    <div class="row mx-3 my-3">
       <div class="col-md-9">
         <div id="schedule"></div>
       </div>
       <div class="col-md-3 properties">
         <div class="row mb-3">
-          <div class="col-md-5" style="line-height:38px;font-weight:500;">Height</div>
+          <div class="col-md-5" style="line-height:38px;font-weight:500;">Enable AllDay Scroll</div>
           <div class="col-md-7">
-            <select id="printHeight" class="form-control e-css">
-              <option value="auto" selected>Auto</option>
-              <option value="100%">100%</option>
-              <option value="500px">500px</option>
+            <select id="allday" class="form-control e-css">
+              <option value="true" selected>True</option>
+              <option value="false">False</option>
             </select>
           </div>
         </div>
         <div class="row mb-3">
-          <div class="col-md-5" style="line-height:38px;font-weight:500;">Width</div>
+          <div class="col-md-5" style="line-height:38px;font-weight:500;">Height</div>
           <div class="col-md-7">
-            <select id="printWidth" class="form-control e-css">
-              <option value="auto" selected>Auto</option>
-              <option value="100%">100%</option>
-              <option value="500px">500px</option>
+            <select id="height" class="form-control e-css">
+              <option value="auto">Auto</option>
+              <option value="500px" selected>600px</option>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-md-5" style="line-height:38px;font-weight:500;">Enable Resource Grouping</div>
+          <div class="col-md-7">
+            <select id="grouping" class="form-control e-css">
+              <option value="true">True</option>
+              <option value="false" selected>False</option>
             </select>
           </div>
         </div>

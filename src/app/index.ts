@@ -1,78 +1,63 @@
-import { Schedule, Day, Week, WorkWeek, Month, Agenda, MonthAgenda, Print } from '@syncfusion/ej2-schedule';
+import { Schedule, Day, Week, WorkWeek, Month } from '@syncfusion/ej2-schedule';
 
-Schedule.Inject(Day, Week, WorkWeek, Month, Agenda, MonthAgenda, Print);
+Schedule.Inject(Day, Week, WorkWeek, Month);
 
 let scheduleObj = new Schedule({
-    currentView: 'Agenda',
-    width: '100%', height: '555px',
-    selectedDate: new Date(2017, 10, 1),
+    width: '100%', height: '600px',
+    selectedDate: new Date(2021, 3, 28),
+    enableAllDayScroll: true,
+    resources: [
+        {
+            field: 'ProjectId', title: 'Choose Project', name: 'Projects',
+            dataSource: [
+                { text: 'PROJECT 1', id: 1, color: '#cb6bb2' },
+                { text: 'PROJECT 2', id: 2, color: '#56ca85' },
+                { text: 'PROJECT 3', id: 3, color: '#df5286' }
+            ],
+            textField: 'text', idField: 'id', colorField: 'color'
+        }, {
+            field: 'TaskId', title: 'Category', name: 'Categories', allowMultiple: true,
+            dataSource: [
+                { text: 'Nancy', id: 1, groupId: 1, color: '#df5286' },
+                { text: 'Steven', id: 2, groupId: 1, color: '#7fa900' },
+                { text: 'Robert', id: 3, groupId: 2, color: '#ea7a57' },
+                { text: 'Smith', id: 4, groupId: 2, color: '#5978ee' },
+                { text: 'Micheal', id: 5, groupId: 3, color: '#df5286' },
+                { text: 'Root', id: 6, groupId: 3, color: '#00bdae' }
+            ],
+            textField: 'text', idField: 'id', groupIDField: 'groupId', colorField: 'color'
+        }
+    ],
     eventSettings: {
         dataSource: generateObject()
     }
 });
 scheduleObj.appendTo('#schedule');
 
-document.getElementById('print').onclick = (): void => {
-    scheduleObj.print({
-        height: (document.getElementById('printHeight') as HTMLSelectElement).value,
-        width: (document.getElementById('printWidth') as HTMLSelectElement).value,
-        printView: scheduleObj.currentView
-    });
+document.getElementById('allday').onchange = (e: Event) => {
+    scheduleObj.enableAllDayScroll = (e.target as HTMLSelectElement).value === 'true';
+};
+
+document.getElementById('height').onchange = (e: Event) => {
+    scheduleObj.height = (e.target as HTMLSelectElement).value;
+};
+
+document.getElementById('grouping').onchange = (e: Event) => {
+    scheduleObj.group.resources = (e.target as HTMLSelectElement).value === 'true' ? ['Projects', 'Categories'] : [];
 };
 
 function generateObject(): Record<string, any>[] {
     const data: Record<string, any>[] = [];
-    const names: string[] = [
-        'Bering Sea Gold', 'Technology', 'Maintenance', 'Meeting', 'Travelling', 'Annual Conference', 'Birthday Celebration',
-        'Farewell Celebration', 'Wedding Anniversary', 'Alaska: The Last Frontier', 'Deadest Catch', 'Sports Day',
-        'MoonShiners', 'Close Encounters', 'HighWay Thru Hell', 'Daily Planet', 'Cash Cab', 'Basketball Practice',
-        'Rugby Match', 'Guitar Class', 'Music Lessons', 'Doctor checkup', 'Brazil - Mexico', 'Opening ceremony', 'Final presentation'
-    ];
-    const start: number = new Date(2017, 0, 1).getTime();
-    const end: number = new Date(2018, 11, 31).getTime();
-    const dayCount: number = 1000 * 60 * 60;
-    for (let a: number = start, id: number = 3; a < end; a += (dayCount * 24) * 2) {
-        const count: number = Math.floor((Math.random() * 9) + 1);
-        for (let b: number = 0; b < count; b++) {
-            const hour: number = Math.floor(Math.random() * 100) % 24;
-            const minutes: number = Math.round((Math.floor(Math.random() * 100) % 60) / 5) * 5;
-            const nCount: number = Math.floor(Math.random() * names.length);
-            const startDate: Date = new Date(new Date(a).setHours(hour, minutes));
-            const endDate: Date = new Date(startDate.getTime() + (dayCount * 2.5));
-            data.push({
-                Id: id,
-                Subject: names[nCount],
-                StartTime: startDate,
-                EndTime: endDate,
-                IsAllDay: (id % 10) ? false : true
-            });
-            id++;
-        }
+    for (let a: number = 0; a < 25; a++) {
+        data.push({
+            Id: a + 1,
+            Subject: 'Testing',
+            StartTime: new Date(2021, 3, 28),
+            EndTime: new Date(2021, 3, 29),
+            IsAllDay: true,
+            ProjectId: 1,
+            TaskId: 2
+        });
     }
-    const longerEvent: Record<string, any> = {
-        Id: 0,
-        StartTime: new Date(2017, 0, 1),
-        EndTime: new Date(2017, 0, 10),
-        IsAllDay: true,
-        Location: 'Chennai'
-    };
-    const occurrenceEvent: Record<string, any> = {
-        Id: 1,
-        StartTime: new Date(2017, 0, 1),
-        EndTime: new Date(2017, 0, 10),
-        IsAllDay: true,
-        RecurrenceRule: 'FREQ=DAILY;INTERVAL=1;COUNT=5',
-        RecurrenceId: 0
-    };
-    const recurrenceEvent: Record<string, any> = {
-        Id: 2,
-        StartTime: new Date(2017, 0, 1),
-        EndTime: new Date(2017, 0, 10),
-        IsAllDay: true,
-        RecurrenceRule: 'FREQ=DAILY;INTERVAL=1'
-    };
-    data.push(longerEvent);
-    data.push(occurrenceEvent);
-    data.push(recurrenceEvent);
     return data;
 }
