@@ -1,15 +1,13 @@
-import { Schedule, Year, TimelineYear, DragAndDrop, Resize } from '@syncfusion/ej2-schedule';
+import { Schedule, Day, Week, Month, Year, DragAndDrop, Resize } from '@syncfusion/ej2-schedule';
 
-Schedule.Inject(Year, TimelineYear, DragAndDrop, Resize);
+Schedule.Inject(Day, Week, Month, Year, DragAndDrop, Resize);
 
 let scheduleObj = new Schedule({
     width: '100%', height: '555px',
     selectedDate: new Date(2020, 0, 1),
-    views: [
-        { option: 'Year', isSelected: true },
-        { option: 'TimelineYear', displayName: 'Horizontal Year' },
-        { option: 'TimelineYear', displayName: 'Vertical Year', orientation: 'Vertical' }
-    ],
+    views: ['Day', 'Week', 'Month', 'Year'],
+    currentView: 'Month',
+    enableCompactView: true,
     group: {
         resources: ['Projects', 'Categories']
     },
@@ -40,32 +38,8 @@ let scheduleObj = new Schedule({
 });
 scheduleObj.appendTo('#schedule');
 
-document.getElementById('firstMonthOfYear').onchange = (e: Event) => {
-    scheduleObj.firstMonthOfYear = parseInt((e.target as HTMLSelectElement).value, 10);
-    scheduleObj.dataBind();
-};
-
-document.getElementById('yearMonthsCount').onchange = (e: Event) => {
-    scheduleObj.yearMonthsCount = parseInt((e.target as HTMLSelectElement).value, 10);
-    scheduleObj.dataBind();
-};
-
-document.getElementById('yearMonths').onchange = (e: Event) => {
-    const months: number[] = [];
-    for (const option of [].slice.call((e.target as HTMLSelectElement).selectedOptions)) {
-        months.push(parseInt(option.value, 10));
-    }
-    scheduleObj.yearMonths = months;
-    scheduleObj.dataBind();
-};
-
-document.getElementById('rowAutoHeight').onchange = (e: Event) => {
-    scheduleObj.rowAutoHeight = (e.target as HTMLSelectElement).value === 'true';
-    scheduleObj.dataBind();
-};
-
-document.getElementById('resourceGrouping').onchange = (e: Event) => {
-    scheduleObj.group.resources = (e.target as HTMLSelectElement).value === 'true' ? ['Projects', 'Categories'] : [];
+document.getElementById('enableCompactView').onchange = (e: Event) => {
+    scheduleObj.enableCompactView = (e.target as HTMLSelectElement).value === 'true';
     scheduleObj.dataBind();
 };
 
