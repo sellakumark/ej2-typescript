@@ -1,15 +1,11 @@
-var path = require("path");
-var UglifyJsPlugin = require("uglifyjs-webpack-plugin");
-
 module.exports = {
   mode: "development",
   entry: {
-    "src/app/bundle": "./src/app/index.ts"
+    "src/bundle": "./src/index.ts"
   },
   output: {
-    filename: "src/app/index.js"
+    filename: "src/index.js"
   },
-  devtool: "none",
   module: {
     rules: [
       {
@@ -18,7 +14,6 @@ module.exports = {
       }
     ]
   },
-
   resolve: {
     extensions: [".ts", ".js"]
   }

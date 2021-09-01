@@ -17,7 +17,11 @@
         "forceConsistentCasingInFileNames": true,
         "moduleResolution": "node",
         "suppressImplicitAnyIndexErrors": true,
-        "lib": ["es5", "es6", "dom"]
+        "lib": [
+            "es5",
+            "es6",
+            "dom"
+        ]
     },
     "compileOnSave": false
 }

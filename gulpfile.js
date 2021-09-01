@@ -1,54 +1,35 @@
-'use strict';
-
 var gulp = require('gulp');
 
-/**
- * Load the sample in src/app/index
- */
 gulp.task('start', ['compile'], function (done) {
     var browserSync = require('browser-sync');
     var bs = browserSync.create('Essential JS 2');
     var options = {
         server: {
             baseDir: [
-                './src/app/',
-                './src/resource/',
+                './src/',
                 './node_modules/@syncfusion/ej2/'
             ]
         },
-        ui: false
+        ui: false,
+        port: 9876
     };
     bs.init(options, done);
 });
 
-/** k
- * Compile TypeScript to JS
- */
 gulp.task('compile', function (done) {
     var webpack = require('webpack');
     var webpackStream = require('webpack-stream');
-    gulp.src(['./src/app/index.ts']).pipe(webpackStream({
-        config: require('./webpack.config.js')
-    }, webpack))
-        .pipe(gulp.dest('./'))
-        .on('end', function () {
-            done();
-        });
+    gulp.src(['./src/app/index.ts']).pipe(webpackStream({ config: require('./webpack.config.js') }, webpack))
+        .pipe(gulp.dest('./')).on('end', function () { done(); });
 });
 
-
-/**
- * Testing spec files
- */
 var protractor = require('gulp-protractor').protractor;
 var webdriver_standalone = require('gulp-protractor').webdriver_standalone;
 var webdriver_update = require('gulp-protractor').webdriver_update_specific;
 
 gulp.task('e2e-serve', webdriver_standalone);
 
-gulp.task('e2e-webdriver-update', webdriver_update({
-    webdriverManagerArgs: ['--ie', '--edge']
-}));
+gulp.task('e2e-webdriver-update', webdriver_update({ webdriverManagerArgs: ['--ie', '--edge'] }));
 
 gulp.task('e2e-test', ['compile'], function (done) {
     var browserSync = require('browser-sync');
@@ -56,8 +37,7 @@ gulp.task('e2e-test', ['compile'], function (done) {
     var options = {
         server: {
             baseDir: [
-                './src/app/',
-                './src/resource/',
+                './src/',
                 './node_modules/@syncfusion/ej2/'
             ],
             directory: true
@@ -67,12 +47,8 @@ gulp.task('e2e-test', ['compile'], function (done) {
         notify: false
     };
     bs.init(options, function () {
-        gulp.src(['./spec/**/*.spec.js'])
-            .pipe(protractor({
-                configFile: 'e2e/protractor.conf.js'
-            }))
+        gulp.src(['./spec/**/*.spec.js']).pipe(protractor({ configFile: 'e2e/protractor.conf.js' }))
             .on('error', function (e) {
-                console.error('Error: ' + e.message);
                 done();
                 process.exit(1);
             })

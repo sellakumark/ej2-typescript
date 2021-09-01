@@ -7,7 +7,6 @@ let scheduleObj = new Schedule({
     selectedDate: new Date(2020, 0, 1),
     views: ['Day', 'Week', 'Month', 'Year'],
     currentView: 'Month',
-    enableCompactView: true,
     group: {
         resources: ['Projects', 'Categories']
     },
@@ -37,11 +36,6 @@ let scheduleObj = new Schedule({
     eventSettings: { dataSource: yearDataGenerator(500, new Date(2020, 0, 1), 2) }
 });
 scheduleObj.appendTo('#schedule');
-
-document.getElementById('enableCompactView').onchange = (e: Event) => {
-    scheduleObj.enableCompactView = (e.target as HTMLSelectElement).value === 'true';
-    scheduleObj.dataBind();
-};
 
 function yearDataGenerator(count: number = 100, date: Date = new Date(), yearCount: number = 0): Record<string, any>[] {
     const startDate: Date = new Date(date.getFullYear(), 0, 1);
