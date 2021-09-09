@@ -14,12 +14,13 @@ gulp.task('start', ['compile'], function (done) {
         port: 9876
     };
     bs.init(options, done);
+    gulp.watch('./src/index.ts', ['compile', bs.reload]);
 });
 
 gulp.task('compile', function (done) {
     var webpack = require('webpack');
     var webpackStream = require('webpack-stream');
-    gulp.src(['./src/app/index.ts']).pipe(webpackStream({ config: require('./webpack.config.js') }, webpack))
+    gulp.src(['./src/index.ts']).pipe(webpackStream({ config: require('./webpack.config.js') }, webpack))
         .pipe(gulp.dest('./')).on('end', function () { done(); });
 });
 
