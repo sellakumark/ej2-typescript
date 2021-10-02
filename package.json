@@ -1,35 +1,35 @@
 {
-  "name": "ej2-typescript",
-  "version": "0.0.1",
-  "description": "typescript project",
-  "license": "MIT",
-  "private": true,
-  "dependencies": {
-    "@syncfusion/ej2": "*"
-  },
-  "devDependencies": {
-    "@types/moment-timezone": "0.5.7",
-    "browser-sync": "2.27.5",
-    "css-loader": "6.2.0",
-    "gulp": "3.9.1",
-    "gulp-protractor": "4.1.1",
-    "jasmine": "3.9.0",
-    "moment-timezone": "0.5.13",
-    "node-sass": "6.0.1",
-    "sass-loader": "12.1.0",
-    "style-loader": "3.2.1",
-    "ts-loader": "9.2.5",
-    "typescript": "4.4.2",
-    "uglifyjs-webpack-plugin": "2.2.0",
-    "webpack": "5.51.0",
-    "webpack-cli": "4.8.0",
-    "webpack-stream": "7.0.0"
-  },
-  "scripts": {
-    "start": "gulp start",
-    "serve": "gulp e2e-serve",
-    "test": "gulp e2e-test",
-    "build": "webpack",
-    "update-webdriver": "gulp e2e-webdriver-update"
-  }
+    "name": "ej2-typescript",
+    "version": "1.0.0",
+    "description": "typescript project",
+    "license": "MIT",
+    "private": true,
+    "dependencies": {
+        "@syncfusion/ej2": "*"
+    },
+    "devDependencies": {
+        "@types/moment-timezone": "0.5.7",
+        "browser-sync": "2.27.5",
+        "css-loader": "6.2.0",
+        "gulp": "3.9.1",
+        "gulp-protractor": "4.1.1",
+        "jasmine": "3.9.0",
+        "moment-timezone": "0.5.13",
+        "node-sass": "6.0.1",
+        "sass-loader": "12.1.0",
+        "style-loader": "3.2.1",
+        "ts-loader": "9.2.5",
+        "typescript": "4.4.2",
+        "uglifyjs-webpack-plugin": "2.2.0",
+        "webpack": "5.51.0",
+        "webpack-cli": "4.8.0",
+        "webpack-stream": "7.0.0"
+    },
+    "scripts": {
+        "build": "webpack",
+        "serve": "gulp e2e-serve",
+        "start": "gulp start",
+        "test": "gulp e2e-test",
+        "update-webdriver": "gulp e2e-webdriver-update"
+    }
 }
