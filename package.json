@@ -5,7 +5,7 @@
     "license": "MIT",
     "private": true,
     "dependencies": {
-        "@syncfusion/ej2": "*"
+        "@syncfusion/ej2-navigations": "*"
     },
     "devDependencies": {
         "@types/moment-timezone": "0.5.7",
