@@ -7,7 +7,7 @@ const defaultObj: Carousel = new Carousel({
         effect: 'None'
     },
     items: [
-        { template: '<img src="images/bird.jpg" alt="image" width="100%" height="300" />', cssClass: 'item-test' },
+        { template: '<img src="images/bird.jpg" alt="image" width="100%" height="300" />' },
         { template: '<img src="images/nature.jpg" alt="image" width="100%" height="300" />' },
         { template: '<img src="images/night-view.jpg" alt="image" width="100%" height="300" />' },
         { template: '<img src="images/sea-view.jpg" alt="image" width="100%" height="300" />' },
@@ -46,6 +46,43 @@ document.getElementById('themeChange').onchange = (e: Event) => {
     }
 };
 
+/** Carousel Animations */
+const animationObj: Carousel = new Carousel({
+    animation: {
+        customEffect: 'zoom'
+    },
+    cssClass: 'ca-carousel',
+    items: [
+        { cssClass: 'animate__animated animate__jackInTheBox', template: '<img src="images/bird.jpg" alt="image" width="100%" height="300" />' },
+        { cssClass: 'animate__animated animate__jackInTheBox', template: '<img src="images/nature.jpg" alt="image" width="100%" height="300" />' },
+        { cssClass: 'animate__animated animate__jackInTheBox', template: '<img src="images/night-view.jpg" alt="image" width="100%" height="300" />' },
+        { cssClass: 'animate__animated animate__jackInTheBox', template: '<img src="images/sea-view.jpg" alt="image" width="100%" height="300" />' },
+        { cssClass: 'animate__animated animate__jackInTheBox', template: '<img src="images/snowfall.jpg" alt="image" width="100%" height="300" />' }
+    ]
+});
+animationObj.appendTo(document.getElementById('carouselAnimations'));
+
+document.getElementById('animateEffects').onchange = (e: Event) => {
+    const effectName: string = (e.target as HTMLSelectElement).value;
+    if (effectName === 'none') {
+        return;
+    }
+    const items: HTMLElement[] = [].slice.call(animationObj.element.querySelectorAll('.e-carousel-item'));
+    const animationEffects: string[] = ['animate__animated', 'animate__bounceIn', 'animate__flipInY', 'animate__jackInTheBox'];
+    removeClass(items, animationEffects);
+    addClass(items, ['animate__animated', effectName]);
+};
+
+document.getElementById('customEffects').onchange = (e: Event) => {
+    const effectName: string = (e.target as HTMLSelectElement).value;
+    if (effectName === 'none') {
+        return;
+    }
+    removeClass(animationObj.element.querySelectorAll('.e-carousel-item'), ['animate__animated', 'animate__bounceIn', 'animate__flipInY', 'animate__jackInTheBox']);
+    animationObj.animation.customEffect = effectName;
+    animationObj.dataBind();
+};
+
 /** Datasource Binding Carousel */
 const carouselItems: Record<string, string | number>[] = [
     {
@@ -77,11 +114,10 @@ const carouselItems: Record<string, string | number>[] = [
 ];
 
 const datasourceObj: Carousel = new Carousel({
-    animation: {
-        effect: 'None'
-    },
+    animation: { effect: 'Fade' },
     cssClass: 'ds-carousel',
     dataSource: carouselItems,
+    height: 425,
     itemTemplate: '#datasourceTemplate',
     showPlayButton: false
 });
@@ -89,6 +125,7 @@ datasourceObj.appendTo(document.getElementById('datasourceCarousel'));
 
 /** Template Carouse */
 const templateObj: Carousel = new Carousel({
+    animation: { effect: 'None' },
     items: [
         { template: '#itemTemplate' },
         { template: '<img src="images/nature.jpg" alt="image" width="100%" height="300" />' },
@@ -103,9 +140,6 @@ const templateObj: Carousel = new Carousel({
     arrowsTemplate: '#arrowsTemplate',
     indicatorsTemplate: '#indicatorTemplate',
     playButtonTemplate: '#playButtonTemplate',
-    animation: {
-        effect: 'None'
-    },
     slideChanged: (args: SlideChangedEventArgs) => {
         const indicators: Element = templateObj.element.querySelector('.e-carousel-indicators');
         removeClass(indicators.querySelectorAll('.indicator'), 'active');
@@ -119,8 +153,7 @@ document.getElementById('play-button').onclick = (e: Event) => {
         removeClass([(e.currentTarget as HTMLElement).querySelector('.play')], 'play-hide');
         addClass([(e.currentTarget as HTMLElement).querySelector('.pause')], 'pause-hide');
         templateObj.pause();
-    }
-    else {
+    } else {
         addClass([(e.currentTarget as HTMLElement).querySelector('.play')], 'play-hide');
         removeClass([(e.currentTarget as HTMLElement).querySelector('.pause')], 'pause-hide');
         templateObj.play();
@@ -131,7 +164,7 @@ document.getElementById('play-button').onclick = (e: Event) => {
 const publicMethodObj: Carousel = new Carousel({
     cssClass: 'pm-carousel',
     items: [
-        { template: '<img src="images/bird.jpg" alt="image" width="100%" height="300" />', cssClass: 'item-test' },
+        { template: '<img src="images/bird.jpg" alt="image" width="100%" height="300" />' },
         { template: '<img src="images/nature.jpg" alt="image" width="100%" height="300" />' },
         { template: '<img src="images/night-view.jpg" alt="image" width="100%" height="300" />' },
         { template: '<img src="images/sea-view.jpg" alt="image" width="100%" height="300" />' },
@@ -162,8 +195,7 @@ const sections: HTMLElement[] = [].slice.call(document.querySelectorAll('.sectio
 links.forEach((link: HTMLElement) => {
     link.onclick = (e: Event) => {
         e.preventDefault();
-        removeClass(links, 'active');
-        removeClass(sections, 'active');
+        removeClass(links.concat(sections), 'active');
         const target: HTMLElement = e.target as HTMLElement;
         const section: HTMLElement = document.getElementById(target.getAttribute('href').replace('#', '')) as HTMLElement;
         addClass([target, section], 'active');
