@@ -48,9 +48,7 @@ document.getElementById('themeChange').onchange = (e: Event) => {
 
 /** Carousel Animations */
 const animationObj: Carousel = new Carousel({
-    animation: {
-        customEffect: 'zoom'
-    },
+    animation: { customEffect: 'zoom' },
     cssClass: 'ca-carousel',
     items: [
         { cssClass: 'animate__animated animate__jackInTheBox', template: '<img src="images/bird.jpg" alt="image" width="100%" height="300" />' },
@@ -62,25 +60,33 @@ const animationObj: Carousel = new Carousel({
 });
 animationObj.appendTo(document.getElementById('carouselAnimations'));
 
+const removeAnimationEffects: Function = (items: HTMLElement[]) => {
+    removeClass(items, ['animate__animated', 'animate__bounceIn', 'animate__flipInY', 'animate__jackInTheBox']);
+};
+
 document.getElementById('animateEffects').onchange = (e: Event) => {
     const effectName: string = (e.target as HTMLSelectElement).value;
+    const items: HTMLElement[] = [].slice.call(animationObj.element.querySelectorAll('.e-carousel-item'));
+    removeAnimationEffects(items);
     if (effectName === 'none') {
         return;
+    } else {
+        addClass(items, ['animate__animated', effectName]);
+        (document.getElementById('customEffects') as HTMLSelectElement).value = 'none';
     }
-    const items: HTMLElement[] = [].slice.call(animationObj.element.querySelectorAll('.e-carousel-item'));
-    const animationEffects: string[] = ['animate__animated', 'animate__bounceIn', 'animate__flipInY', 'animate__jackInTheBox'];
-    removeClass(items, animationEffects);
-    addClass(items, ['animate__animated', effectName]);
 };
 
 document.getElementById('customEffects').onchange = (e: Event) => {
     const effectName: string = (e.target as HTMLSelectElement).value;
     if (effectName === 'none') {
-        return;
+        animationObj.animation.customEffect = 'zoom';
+    } else {
+        removeAnimationEffects(animationObj.element.querySelectorAll('.e-carousel-item'));
+        animationObj.animation.customEffect = effectName;
     }
-    removeClass(animationObj.element.querySelectorAll('.e-carousel-item'), ['animate__animated', 'animate__bounceIn', 'animate__flipInY', 'animate__jackInTheBox']);
-    animationObj.animation.customEffect = effectName;
     animationObj.dataBind();
+    (document.getElementById('animateEffects') as HTMLSelectElement).value = 'none';
+    removeAnimationEffects(animationObj.element.querySelectorAll('.e-carousel-item'));
 };
 
 /** Datasource Binding Carousel */
