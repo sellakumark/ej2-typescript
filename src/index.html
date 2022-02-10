@@ -16,11 +16,6 @@
         }
 
         .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
             height: calc(100vh - 112px);
         }
 
@@ -28,115 +23,12 @@
             background-color: #f8f9fa;
             border: 1px solid #e5e5e5;
             border-radius: 1rem;
-            height: 366px;
+            height: 343px;
             margin: 0 auto;
             padding: 2rem;
             width: 566px;
         }
-
-        .ds-carousel .e-carousel-indicators {
-            bottom: auto;
-            top: 0;
-        }
-
-        .tmpl-carousel .e-carousel-indicators .e-indicator-bars .e-indicator-bar.e-indicator-template .indicator {
-            background-color: #f8f9fa;
-            border-radius: 0.25rem;
-            height: 0.4rem;
-            margin: 0.5rem;
-            width: 1.5rem;
-        }
-
-        .tmpl-carousel .e-carousel-indicators .e-indicator-bars .e-indicator-bar.e-indicator-template .indicator.active {
-            background-color: #e3165b;
-        }
-
-        .tmpl-carousel .e-carousel-navigators .bi {
-            color: #fff;
-        }
-
-        .tmpl-carousel .e-carousel-navigators .bi::before {
-            font-size: 1.5rem;
-        }
-
-        .tmpl-carousel .e-carousel-navigators .bi.play-hide {
-            display: none;
-        }
-
-        .tmpl-carousel .e-carousel-navigators .bi.pause-hide {
-            display: none;
-        }
-
-        .ca-carousel .e-carousel-items.parallax .e-carousel-item {
-            transition: transform 1s ease-in-out;
-        }
-
-        .ca-carousel .e-carousel-items.parallax .e-carousel-item.e-carousel-left,
-        .ca-carousel .e-carousel-items.parallax .e-carousel-item.e-carousel-right {
-            animation: ParallaxOut 1s ease-in-out;
-        }
-
-        .ca-carousel .e-carousel-items.parallax .e-carousel-item.e-previous-slide,
-        .ca-carousel .e-carousel-items.parallax .e-carousel-item.e-next-slide {
-            animation: ParallaxIn 1s ease-in-out;
-        }
-
-        @keyframes ParallaxIn {
-            from {
-                transform: scale(0) translateY(100%);
-            }
-
-            to {
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        @keyframes ParallaxOut {
-            from {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-
-            to {
-                opacity: 0;
-                transform: scale(0) translateY(-100%);
-            }
-        }
     </style>
-    <script type="text/x-template" id="arrowsTemplate">
-        <button class="btn h-100 w-100">
-            ${if (type === 'previous')}
-            <i class="bi bi-arrow-left-circle"></i>
-            ${else}
-            <i class="bi bi-arrow-right-circle"></i>
-            ${/if}
-        </button>
-    </script>
-    <script type="text/x-template" id="playButtonTemplate">
-        <button class="btn h-100 w-100" id="play-button">
-            <i class="bi bi-pause pause"></i>
-            <i class="bi bi-play play play-hide"></i>
-        </button>
-    </script>
-    <script type="text/x-template" id="indicatorTemplate">
-        ${if (selectedIndex === index)}
-        <div class="indicator active" indicator-index="${index}"></div>
-        ${else}
-        <div class="indicator" indicator-index="${index}"></div>
-        ${/if}
-    </script>
-    <script type="text/x-template" id="itemTemplate">
-        <img src="images/bird.jpg" alt="image" width="100%" height="300" />
-    </script>
-    <script type="text/x-template" id="datasourceTemplate">
-        <div class="card">
-            <img src="${ImgPath}" class="card-img-top" alt="logo" width="100%" height="250px" />
-            <div class="card-body">
-                <h5 class="card-title">${Title}</h5>
-                <p class="card-text">${Content}</p>
-            </div>
-        </div>
-    </script>
 </head>
 
 <body>
@@ -150,172 +42,41 @@
             <div class="container">
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#default">Default</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#animations">Animations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#datasource">Datasource Binding</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#template">Template</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#public">Public Methods</a>
+                        <a class="nav-link active" href="#animations">Animations</a>
                     </li>
                 </ul>
             </div>
         </nav>
     </header>
-    <section id="default" class="section active">
-        <div class="container h-100 d-flex justify-content-center align-items-center">
-            <div class="row">
-                <div class="col-8 p-5">
-                    <div class="carousel-container shadow">
-                        <div id="carousel"></div>
-                    </div>
-                </div>
-                <div class="col-4 p-5">
-                    <div class="row pb-3">
-                        <div class="col-6" style="align-self:center;">Animation</div>
-                        <div class="col-6">
-                            <select id="animation" class="form-control">
-                                <option value="None" selected>None</option>
-                                <option value="Slide">Slide</option>
-                                <option value="Fade">Fade</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col-6" style="align-self:center;">Show Arrows</div>
-                        <div class="col-6">
-                            <select id="showArrow" class="form-control">
-                                <option value="Never">Never</option>
-                                <option value="Static" selected>Static</option>
-                                <option value="OnHover">On Hover</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col-6" style="align-self:center;">Show Indicators</div>
-                        <div class="col-6">
-                            <select id="showIndicators" class="form-control">
-                                <option value="true" selected>True</option>
-                                <option value="false">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col-6" style="align-self:center;">Show Play button</div>
-                        <div class="col-6">
-                            <select id="showPlayButton" class="form-control">
-                                <option value="true" selected>True</option>
-                                <option value="false">False</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row pb-3">
-                        <div class="col-6" style="align-self:center;">Choose Theme</div>
-                        <div class="col-6">
-                            <select id="themeChange" class="form-control">
-                                <option value="material" selected>Material</option>
-                                <option value="fabric">Fabric</option>
-                                <option value="bootstrap">Bootstrap</option>
-                                <option value="bootstrap4">Bootstrap4</option>
-                                <option value="bootstrap5">Bootstrap5</option>
-                                <option value="tailwind">Tailwind</option>
-                                <option value="highcontrast">Highcontrast</option>
-                                <option value="highcontrast-light">Highcontrast Light</option>
-                                <option value="material-dark">Material Dark</option>
-                                <option value="fabric-dark">Fabric Dark</option>
-                                <option value="bootstrap-dark">Bootstrap Dark</option>
-                                <option value="bootstrap5-dark">Bootstrap5 Dark</option>
-                                <option value="tailwind-dark">Tailwind Dark</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section id="animations" class="section">
-        <div class="container h-100 d-flex justify-content-center align-items-center">
-            <div class="row">
-                <div class="col-8 p-5">
-                    <div class="carousel-container shadow">
-                        <div id="carouselAnimations"></div>
-                    </div>
-                </div>
-                <div class="col-4 p-5">
-                    <h5 class="mb-3">Animate.css</h5>
-                    <div class="row pb-3 mb-5">
-                        <div class="col-6" style="align-self:center;">Select Effect</div>
-                        <div class="col-6">
-                            <select id="animateEffects" class="form-control">
-                                <option value="none">None</option>
-                                <option value="animate__bounceIn">Bounce</option>
-                                <option value="animate__flipInY">Flip</option>
-                                <option value="animate__jackInTheBox" selected>Zoom</option>
-                            </select>
-                        </div>
-                    </div>
-                    <h5 class="mb-3">Custom Animations</h5>
-                    <div class="row pb-3">
-                        <div class="col-6" style="align-self:center;">Select Effect</div>
-                        <div class="col-6">
-                            <select id="customEffects" class="form-control">
-                                <option value="none" selected>None</option>
-                                <option value="parallax">Parallax</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+    <section id="animation" class="section">
+        <div class="container h-100 d-flex justify-content-center align-items-center flex-column">
+            <div class="row flex-row gap-3 flex-nowrap justify-content-center">
+                <button id="previous" class="btn btn-info">Previous</button>
+                <button id="next" class="btn btn-info">Next</button>
             </div>
-        </div>
-    </section>
-
-    <section id="datasource" class="section">
-        <div class="container h-100 d-flex justify-content-center align-items-center">
-            <div class="row">
-                <div class="col-12 p-5">
-                    <div class="carousel-container shadow h-auto">
-                        <div id="datasourceCarousel"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="template" class="section">
-        <div class="container h-100 d-flex justify-content-center align-items-center">
             <div class="row">
                 <div class="col-12 p-5">
                     <div class="carousel-container shadow">
-                        <div id="templateCarousel"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="public" class="section">
-        <div class="container h-100 d-flex justify-content-center align-items-center">
-            <div class="row">
-                <div class="col-12 p-5">
-                    <div class="table-container p-4">
-                        <table style="margin: 0 auto;">
-                            <tr>
-                                <td class="px-2"><button id="previous_btn" class="e-btn">Previous</button></td>
-                                <td class="px-2"><button id="next_btn" class="e-btn">Next</button></td>
-                                <td class="px-2"><button id="play_btn" class="e-btn">Play</button></td>
-                                <td class="px-2"><button id="pause_btn" class="e-btn">Pause</button></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="carousel-container shadow">
-                        <div id="publicCarousel"></div>
+                        <div id="carousel" class="e-carousel h-100">
+                            <div class="e-carousel-items">
+                                <div class="e-carousel-item e-active">
+                                    <img src="./images/bird.jpg" class="w-100 h-100" alt="logo" />
+                                </div>
+                                <div class="e-carousel-item">
+                                    <img src="./images/nature.jpg" class="w-100 h-100" alt="logo" />
+                                </div>
+                                <div class="e-carousel-item">
+                                    <img src="./images/night-view.jpg" class="w-100 h-100" alt="logo" />
+                                </div>
+                                <div class="e-carousel-item">
+                                    <img src="./images/sea-view.jpg" class="w-100 h-100" alt="logo" />
+                                </div>
+                                <div class="e-carousel-item">
+                                    <img src="./images/snowfall.jpg" class="w-100 h-100" alt="logo" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
