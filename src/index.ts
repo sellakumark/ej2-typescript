@@ -1,50 +1,52 @@
-import { Animation } from '@syncfusion/ej2-base';
+import { addClass, removeClass } from '@syncfusion/ej2-base';
+
+let target: HTMLElement;
+let slide: HTMLElement;
+
+const slideTransition: Function = (index: number, direction: string) => {
+    const slides: HTMLElement[] = [].slice.call(document.querySelectorAll('.e-carousel-item'));
+    target = document.querySelector('.e-carousel-item.e-active') as HTMLElement;
+    slide = slides[index];
+    if (direction === 'previous') {
+        slide.classList.add('e-carousel-item-prev');
+        slide.offsetHeight;
+        target.classList.add('e-carousel-item-end');
+        slide.classList.add('e-carousel-item-end');
+    } else {
+        slide.classList.add('e-carousel-item-next');
+        slide.offsetHeight;
+        target.classList.add('e-carousel-item-start');
+        slide.classList.add('e-carousel-item-start');
+    }
+};
 
 document.getElementById('previous').onclick = () => {
     const slides: HTMLElement[] = [].slice.call(document.querySelectorAll('.e-carousel-item'));
-    const target: HTMLElement = document.querySelector('.e-carousel-item.e-active') as HTMLElement;
+    target = document.querySelector('.e-carousel-item.e-active') as HTMLElement;
     const index: number = (slides.indexOf(target) - 1) % slides.length;
-    const slide: HTMLElement = slides[index < 0 ? slides.length - 1 : index];
-    slide.classList.add('e-active');
-
-    const previousAnimationObj: Animation = new Animation({
-        name: 'SlideRightOut',
-        duration: 1000,
-        timingFunction: 'easeInOut',
-        end: () => {
-            target.classList.remove('e-active');
-        }
-    });
-    previousAnimationObj.animate(target);
-
-    const nextAnimationObj: Animation = new Animation({
-        name: 'SlideLeftIn',
-        duration: 1000,
-        timingFunction: 'easeInOut'
-    });
-    nextAnimationObj.animate(slide);
+    slide = slides[index < 0 ? slides.length - 1 : index];
+    slideTransition(index < 0 ? slides.length - 1 : index, 'previous');
 };
 
 document.getElementById('next').onclick = () => {
     const slides: HTMLElement[] = [].slice.call(document.querySelectorAll('.e-carousel-item'));
-    const target: HTMLElement = document.querySelector('.e-carousel-item.e-active') as HTMLElement;
-    const slide: HTMLElement = slides[(slides.indexOf(target) + 1) % slides.length];
-    slide.classList.add('e-active');
+    target = document.querySelector('.e-carousel-item.e-active') as HTMLElement;
+    slideTransition((slides.indexOf(target) + 1) % slides.length, 'next');
+};
 
-    const previousAnimationObj: Animation = new Animation({
-        name: 'SlideLeftOut',
-        duration: 1000,
-        timingFunction: 'easeInOut',
-        end: () => {
-            target.classList.remove('e-active');
+document.querySelector('.e-carousel-items').addEventListener('transitionend', () => {
+    const slides: HTMLElement[] = [].slice.call(document.querySelectorAll('.e-carousel-item'));
+    removeClass(slides, ['e-carousel-item-end', 'e-carousel-item-prev', 'e-carousel-item-start', 'e-carousel-item-next']);
+    addClass([slide], 'e-active');
+    removeClass([target], 'e-active');
+});
+
+document.querySelectorAll('.btn-indicator').forEach((indicator: Element) => {
+    indicator.addEventListener('click', (e: Event) => {
+        const prevIndex = parseInt((document.querySelector('.e-carousel-item.e-active') as HTMLElement).dataset.index, 10);
+        const index: number = parseInt((e.target as HTMLElement).id.replace('#', ''));
+        if (index !== prevIndex) {
+            slideTransition(index, index > prevIndex ? 'next' : 'previous')
         }
     });
-    previousAnimationObj.animate(target);
-
-    const nextAnimationObj: Animation = new Animation({
-        name: 'SlideRightIn',
-        duration: 1000,
-        timingFunction: 'easeInOut'
-    });
-    nextAnimationObj.animate(slide);
-};
+});

@@ -17,10 +17,6 @@
             height: calc(100vh - 112px);
         }
 
-        .btn-info {
-            width: auto;
-        }
-
         .carousel-container {
             border-radius: 1rem;
             height: 300px;
@@ -29,61 +25,46 @@
         }
 
         .e-carousel {
+            display: block;
+            overflow: hidden;
             position: relative;
         }
 
         .e-carousel .e-carousel-items {
-            position: relative;
             height: 100%;
+            margin: 0;
+            padding: 0;
+            position: relative;
             width: 100%;
-            overflow: hidden;
         }
 
         .e-carousel .e-carousel-items .e-carousel-item {
-            position: relative;
-            display: none;
-            float: left;
-            height: 100%;
             width: 100%;
-            margin-right: -100%;
-            backface-visibility: hidden;
-            transition: transform 0.6s ease-in-out;
-        }
-
-        .e-carousel .e-carousel-items .e-carousel-item.e-active,
-        .e-carousel .e-carousel-items .e-carousel-item-next,
-        .e-carousel .e-carousel-items .e-carousel-item-prev {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            top: 0;
             display: block;
+            transition: left 0.6s ease-in-out;
+            visibility: hidden;
+            position: absolute;
         }
 
-        .e-carousel .e-carousel-items .e-carousel-item.e-carousel-item-next:not(.e-carousel-item-start),
-        .e-carousel .e-carousel-items .e-carousel-item.e-active.e-carousel-item-end {
-            transform: translateX(100%);
+        .e-carousel .e-carousel-items .e-carousel-item.e-slide-transition {
+            visibility: visible;
         }
 
-        .e-carousel .e-carousel-items .e-carousel-item.e-carousel-item-prev:not(.e-carousel-item-end),
-        .e-carousel .e-carousel-items .e-carousel-item.e-active.e-carousel-item-start {
-            transform: translateX(-100%);
+        .e-carousel .e-carousel-items .e-carousel-item.e-prev {
+            left: -100%;
         }
 
-        .e-carousel-fade .e-carousel-item {
-            opacity: 0;
-            transition-property: opacity;
-            transform: none;
+        .e-carousel .e-carousel-items .e-carousel-item.e-active {
+            left: 0;
+            visibility: visible;
         }
 
-        .e-carousel-fade .e-carousel-item.e-active,
-        .e-carousel-fade .e-carousel-item-next.e-carousel-item-start,
-        .e-carousel-fade .e-carousel-item-prev.e-carousel-item-end {
-            z-index: 1;
-            opacity: 1;
-        }
-
-        .e-carousel-fade .e-active.e-carousel-item-start,
-        .e-carousel-fade .e-active.e-carousel-item-end {
-            z-index: 0;
-            opacity: 0;
-            transition: opacity 0s 0.6s;
+        .e-carousel .e-carousel-items .e-carousel-item.e-next {
+            left: 100%;
         }
     </style>
 </head>
@@ -120,7 +101,7 @@
                                 <div class="e-carousel-item e-active" data-index="0">
                                     <img src="./images/bird.jpg" class="w-100 h-100" alt="logo" />
                                 </div>
-                                <div class="e-carousel-item" data-index="1">
+                                <div class="e-carousel-item e-next" data-index="1">
                                     <img src="./images/nature.jpg" class="w-100 h-100" alt="logo" />
                                 </div>
                                 <div class="e-carousel-item" data-index="2">
@@ -129,20 +110,13 @@
                                 <div class="e-carousel-item" data-index="3">
                                     <img src="./images/sea-view.jpg" class="w-100 h-100" alt="logo" />
                                 </div>
-                                <div class="e-carousel-item" data-index="4">
+                                <div class="e-carousel-item e-prev" data-index="4">
                                     <img src="./images/snowfall.jpg" class="w-100 h-100" alt="logo" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row flex-row gap-3 flex-nowrap justify-content-center">
-                <button id="#0" class="btn btn-info btn-indicator">1</button>
-                <button id="#1" class="btn btn-info btn-indicator">2</button>
-                <button id="#2" class="btn btn-info btn-indicator">3</button>
-                <button id="#3" class="btn btn-info btn-indicator">4</button>
-                <button id="#4" class="btn btn-info btn-indicator">5</button>
             </div>
         </div>
     </section>
